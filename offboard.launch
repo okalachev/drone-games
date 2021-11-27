@@ -1,41 +1,42 @@
 <launch>
+	<arg name="num" default="1"/>
 
-	<node name="simple_offboard1" pkg="clover" type="simple_offboard" output="screen" clear_params="true">
+	<node name="simple_offboard$(arg num)" pkg="clover" type="simple_offboard" output="screen" clear_params="true">
 		<param name="reference_frames/body" value="map"/>
 		<param name="reference_frames/base_link" value="map"/>
 		<param name="reference_frames/navigate_target" value="map"/>
 
-		<remap from="/mavlink/to" to="/mavlink1/to"/>
-		<remap from="/mavlink/from" to="/mavlink1/from"/>
-		<remap from="/tf" to="/tf1" />
-		<remap from="/tf_static" to="/tf_static1" />
+		<remap from="/mavlink/to" to="/mavlink$(arg num)/to"/>
+		<remap from="/mavlink/from" to="/mavlink$(arg num)/from"/>
+		<remap from="/tf" to="/tf$(arg num)" />
+		<remap from="/tf_static" to="/tf_static$(arg num)" />
 
-		<remap from="mavros/cmd/arming" to="/mavros1/cmd/arming"/>
-		<remap from="mavros/set_mode" to="/mavros1/set_mode"/>
+		<remap from="mavros/cmd/arming" to="/mavros$(arg num)/cmd/arming"/>
+		<remap from="mavros/set_mode" to="/mavros$(arg num)/set_mode"/>
 
-		<remap from="mavros/state" to="/mavros1/state"/>
-		<remap from="mavros/local_position/velocity_body" to="/mavros1/local_position/velocity_body"/>
-		<remap from="mavros/global_position/global" to="/mavros1/global_position/global"/>
-		<remap from="mavros/battery" to="/mavros1/battery"/>
-		<remap from="mavros/statustext/recv" to="/mavros1/statustext/recv"/>
-		<remap from="mavros/manual_control/control" to="/mavros1/manual_control/control"/>
-		<remap from="mavros/local_position/pose" to="/mavros1/local_position/pose"/>
+		<remap from="mavros/state" to="/mavros$(arg num)/state"/>
+		<remap from="mavros/local_position/velocity_body" to="/mavros$(arg num)/local_position/velocity_body"/>
+		<remap from="mavros/global_position/global" to="/mavros$(arg num)/global_position/global"/>
+		<remap from="mavros/battery" to="/mavros$(arg num)/battery"/>
+		<remap from="mavros/statustext/recv" to="/mavros$(arg num)/statustext/recv"/>
+		<remap from="mavros/manual_control/control" to="/mavros$(arg num)/manual_control/control"/>
+		<remap from="mavros/local_position/pose" to="/mavros$(arg num)/local_position/pose"/>
 
-		<remap from="mavros/setpoint_position/local" to="/mavros1/setpoint_position/local"/>
-		<remap from="mavros/setpoint_raw/local" to="/mavros1/setpoint_raw/local"/>
-		<remap from="mavros/setpoint_attitude/attitude" to="/mavros1/setpoint_attitude/attitude"/>
-		<remap from="mavros/setpoint_raw/attitude" to="/mavros1/setpoint_raw/attitude"/>
-		<remap from="mavros/setpoint_attitude/cmd_vel" to="/mavros1/setpoint_attitude/cmd_vel"/>
-		<remap from="mavros/setpoint_attitude/thrust" to="/mavros1/setpoint_attitude/thrust"/>
+		<remap from="mavros/setpoint_position/local" to="/mavros$(arg num)/setpoint_position/local"/>
+		<remap from="mavros/setpoint_raw/local" to="/mavros$(arg num)/setpoint_raw/local"/>
+		<remap from="mavros/setpoint_attitude/attitude" to="/mavros$(arg num)/setpoint_attitude/attitude"/>
+		<remap from="mavros/setpoint_raw/attitude" to="/mavros$(arg num)/setpoint_raw/attitude"/>
+		<remap from="mavros/setpoint_attitude/cmd_vel" to="/mavros$(arg num)/setpoint_attitude/cmd_vel"/>
+		<remap from="mavros/setpoint_attitude/thrust" to="/mavros$(arg num)/setpoint_attitude/thrust"/>
 
-		<remap from="get_telemetry" to="get_telemetry1"/>
-		<remap from="navigate" to="navigate1"/>
-		<remap from="navigate_global" to="navigate_global1"/>
-		<remap from="set_position" to="set_position1"/>
-		<remap from="set_velocity" to="set_velocity1"/>
-		<remap from="set_attitude" to="set_attitude1"/>
-		<remap from="set_rates" to="set_rates1"/>
-		<remap from="land" to="land1"/>
+		<remap from="get_telemetry" to="get_telemetry$(arg num)"/>
+		<remap from="navigate" to="navigate$(arg num)"/>
+		<remap from="navigate_global" to="navigate_global$(arg num)"/>
+		<remap from="set_position" to="set_position$(arg num)"/>
+		<remap from="set_velocity" to="set_velocity$(arg num)"/>
+		<remap from="set_attitude" to="set_attitude$(arg num)"/>
+		<remap from="set_rates" to="set_rates$(arg num)"/>
+		<remap from="land" to="land$(arg num)"/>
 
 	</node>
 
