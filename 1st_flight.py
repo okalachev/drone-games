@@ -32,16 +32,6 @@ def wait_arrival(drone=0, tolerance=1):
             break
         rospy.sleep(0.2)
 
-def get_points(file):
-
-    lst = file.split("\n")
-    pts = []
-    for line in lst:
-        line = line.split()
-        pts.append((float(line[0]), float(line[1]), float(line[2])))
-    return pts
-
-
 crd_list = []
 
 with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
