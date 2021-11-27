@@ -20,9 +20,9 @@ land = map(range(drones), lambda i: rospy.ServiceProxy('land' + str(i), srv.Trig
 param_set = map(range(drones), lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet))
 
 
-def set_rate_k(k):
-	param_set('MC_ROLLRATE_K', k)
-	param_set('MC_PITCHRATE_K', k)
+def set_rate_k(drone, k):
+	param_set[drone]('MC_ROLLRATE_K', k)
+	param_set[drone]('MC_PITCHRATE_K', k)
 
 
 navigate[0](x=0, y=0, z=5, frame_id='body', auto_arm=True)
