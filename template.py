@@ -6,18 +6,19 @@ from mavros_msgs.srv import ParamSet
 rospy.init_node('flight')
 
 drones = 3
+nums = range(1, drones + 1)
 
 
-get_telemetry = map(range(drones), lambda i: rospy.ServiceProxy('get_telemetry' + str(i), srv.GetTelemetry))
-navigate = map(range(drones), lambda i: rospy.ServiceProxy('navigate' + str(i), srv.Navigate))
-navigate_global = map(range(drones), lambda i: rospy.ServiceProxy('navigate_global' + str(i), srv.NavigateGlobal))
-set_position = map(range(drones), lambda i: rospy.ServiceProxy('set_position' + str(i), srv.SetPosition))
-set_velocity = map(range(drones), lambda i: rospy.ServiceProxy('set_velocity' + str(i), srv.SetVelocity))
-set_attitude = map(range(drones), lambda i: rospy.ServiceProxy('set_attitude' + str(i), srv.SetAttitude))
-set_rates = map(range(drones), lambda i: rospy.ServiceProxy('set_rates' + str(i), srv.SetRates))
-land = map(range(drones), lambda i: rospy.ServiceProxy('land' + str(i), srv.Trigger))
+get_telemetry = map(nums, lambda i: rospy.ServiceProxy('get_telemetry' + str(i), srv.GetTelemetry))
+navigate = map(nums, lambda i: rospy.ServiceProxy('navigate' + str(i), srv.Navigate))
+navigate_global = map(nums, lambda i: rospy.ServiceProxy('navigate_global' + str(i), srv.NavigateGlobal))
+set_position = map(nums, lambda i: rospy.ServiceProxy('set_position' + str(i), srv.SetPosition))
+set_velocity = map(nums, lambda i: rospy.ServiceProxy('set_velocity' + str(i), srv.SetVelocity))
+set_attitude = map(nums, lambda i: rospy.ServiceProxy('set_attitude' + str(i), srv.SetAttitude))
+set_rates = map(nums, lambda i: rospy.ServiceProxy('set_rates' + str(i), srv.SetRates))
+land = map(nums, lambda i: rospy.ServiceProxy('land' + str(i), srv.Trigger))
 
-param_set = map(range(drones), lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet))
+param_set = map(nums, lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet))
 
 
 def set_rate_k(drone, k):
