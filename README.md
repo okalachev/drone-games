@@ -2,6 +2,33 @@
 
 Task: https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5_2.md.
 
+## Installation
+
+Create catkin workspace for Clover packages:
+
+```bash
+mkdir -p ~/clover_ws/src
+cd ~/clover_ws/
+catkin_make
+```
+
+Clone Clover repo:
+
+```bash
+cd clover_ws/src
+git clone https://github.com/CopterExpress/clover.git
+```
+
+Build `simple_offboard` target:
+
+```bash
+cd ~/clover_ws
+catkin_make simple_offboard
+catkin_make clover_generate_messages
+```
+
+## Misc
+
 Run simple_offboard:
 
 ```bash
