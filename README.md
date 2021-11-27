@@ -1,5 +1,7 @@
 # drone-games
 
+Task: https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5_2.md.
+
 Run simple_offboard:
 
 ```bash
