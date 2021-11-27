@@ -1,0 +1,26 @@
+<launch>
+  <arg name="log_output" default="screen" />
+  <arg name="plugin_lists" default="$(find mavros)/launch/px4_pluginlists.yaml" />
+
+  <!-- remap mavlink bridge topics -->
+  <remap from="/mavlink/to" to="/mavlink$(arg num)/to" />
+  <remap from="/mavlink/from" to="/mavlink$(arg num)/from" />
+
+  <node pkg="mavros" type="mavros_node" name="mavros$(arg num)" required="true" clear_params="true" output="$(arg log_output)">
+    <param name="fcu_url" value="$(arg fcu_url)" />
+    <param name="gcs_url" value="udp://:$(arg gcs_inport)@" />
+    <param name="system_id" value="$(arg num)" />
+    <param name="target_system_id" value="$(arg num)" />
+    <param name="target_component_id" value="1" />
+
+    <remap from="/tf" to="/tf$(arg num)" />
+    <remap from="/tf_static" to="/tf_static$(arg num)" />
+
+    <!-- load blacklist, config -->
+    <rosparam command="load" file="$(arg plugin_lists)" />
+    <rosparam command="load" file="$(find mavros)/launch/px4_config.yaml" />
+
+<param name="local_position/tf/send" value="true"/> <!-- ! enable tf -->
+
+  </node>
+</launch>
