@@ -1,6 +1,9 @@
 # drone-games
 
-Task: https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5_2.md.
+Task:
+
+* https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5.md
+* https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5_2.md
 
 ## Installation
 
