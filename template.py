@@ -2,6 +2,7 @@ import rospy
 from clover import srv
 from std_srvs.srv import Trigger
 from mavros_msgs.srv import ParamSet
+from mavros_msgs.msg import ParamValue
 
 rospy.init_node('flight')
 
@@ -22,8 +23,8 @@ param_set = list(map(lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/se
 
 
 def set_rate_k(drone, k):
-    param_set[drone]('MC_ROLLRATE_K', k)
-    param_set[drone]('MC_PITCHRATE_K', k)
+    param_set[drone](param_id='MC_ROLLRATE_K', value=ParamValue(real=k))
+    param_set[drone](param_id='MC_PITCHRATE_K', value=ParamValue(real=k))
 
 
 navigate[0](x=0, y=0, z=5, frame_id='body', auto_arm=True)
