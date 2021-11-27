@@ -30,6 +30,14 @@ catkin_make simple_offboard
 catkin_make clover_generate_messages
 ```
 
+## Running
+
+Run services:
+
+```bash
+roslaunch main.launch
+```
+
 ## Misc
 
 Run simple_offboard:
