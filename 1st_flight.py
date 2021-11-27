@@ -30,6 +30,7 @@ def wait_arrival(drone=0, tolerance=1):
         telem = get_telemetry[drone](frame_id='navigate_target')
         if telem.x ** 2 + telem.y ** 2 + telem.z ** 2 < tolerance**2:
             break
+        print(f"velocity XYZ: {telem.vx} {telem.vy} {telem.vz}")
         rospy.sleep(0.2)
 
 crd_list = []
@@ -45,8 +46,9 @@ navigate[0](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
 rospy.sleep(5)
 
 for crd in crd_list:
-    navigate_global[0](lat=crd[0], lon=crd[1], z=crd[2], speed=5, frame_id='body')
-    #wait_arrival()
-    rospy.sleep(15)
+    print(f"flying to {crd}")
+    navigate_global[0](lat=crd[0], lon=crd[1], z=crd[2], speed=10, frame_id='map')
+    wait_arrival()
+    #rospy.sleep(15)
 
 land[0]()
