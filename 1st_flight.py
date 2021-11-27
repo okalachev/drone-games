@@ -16,7 +16,7 @@ set_position = list(map(lambda i: rospy.ServiceProxy('set_position' + str(i), sr
 set_velocity = list(map(lambda i: rospy.ServiceProxy('set_velocity' + str(i), srv.SetVelocity), nums))
 set_attitude = list(map(lambda i: rospy.ServiceProxy('set_attitude' + str(i), srv.SetAttitude), nums))
 set_rates = list(map(lambda i: rospy.ServiceProxy('set_rates' + str(i), srv.SetRates), nums))
-land = list(map(lambda i: rospy.ServiceProxy('land' + str(i), srv.Trigger), nums))
+land = list(map(lambda i: rospy.ServiceProxy('land' + str(i), Trigger), nums))
 
 param_set = list(map(lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet), nums))
 
@@ -25,9 +25,9 @@ def set_rate_k(drone, k):
     param_set[drone]('MC_ROLLRATE_K', k)
     param_set[drone]('MC_PITCHRATE_K', k)
 
-def wait_arrival(tolerance=1):
+def wait_arrival(drone=0, tolerance=1):
     while not rospy.is_shutdown():
-        telem = get_telemetry(frame_id='navigate_target')
+        telem = get_telemetry[drone](frame_id='navigate_target')
         if telem.x ** 2 + telem.y ** 2 + telem.z ** 2 < tolerance**2:
             break
         rospy.sleep(0.2)
@@ -51,11 +51,12 @@ with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
         crd_list.append((float(l[0]), float(l[1]), float(l[2])))
 
 
-navigate[1](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
+navigate[0](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
 rospy.sleep(5)
 
 for crd in crd_list:
-    navigate_global[1](lat=crd[0], lon=crd[1], z=crd[2], speed=5, frame_id='body')
-    wait_arrival()
+    navigate_global[0](lat=crd[0], lon=crd[1], z=crd[2], speed=5, frame_id='body')
+    #wait_arrival()
+    rospy.sleep(15)
 
-land[1]()
+land[0]()
