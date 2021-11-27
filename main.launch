@@ -1,0 +1,13 @@
+<launch>
+	<include file="offboard.launch">
+		<arg name="num" value="1"/>
+	</include>
+
+	<include file="offboard.launch">
+		<arg name="num" value="2"/>
+	</include>
+
+	<include file="offboard.launch">
+		<arg name="num" value="3"/>
+	</include>
+</launch>

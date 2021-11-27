@@ -5,3 +5,9 @@ Run simple_offboard:
 ```bash
 roslaunch offboard.launch num:=X
 ```
+
+Run 3 simple_offboard's:
+
+```bash
+roslaunch main.launch
+```
