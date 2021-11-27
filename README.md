@@ -32,6 +32,12 @@ catkin_make clover_generate_messages
 
 ## Running
 
+Source clover_ws setup.bash:
+
+```bash
+source ~/clover_ws/devel/setup.bash
+```
+
 Run services:
 
 ```bash
