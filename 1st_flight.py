@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# coding=utf8
 import rospy
 from clover import srv
 from std_srvs.srv import Trigger
@@ -5,9 +7,20 @@ from mavros_msgs.srv import ParamSet
 
 rospy.init_node('flight')
 
+import airsim
+
+cl = airsim.MultirotorClient()
+cl.confirmConnection()
+cl.enableApiControl(True)
+client = cl.client
+
+vehicle_name = "iris1"
+
+
+
 drones = 3
 nums = range(1, drones + 1)
-
+SPEED = 15
 
 get_telemetry = list(map(lambda i: rospy.ServiceProxy('get_telemetry' + str(i), srv.GetTelemetry), nums))
 navigate = list(map(lambda i: rospy.ServiceProxy('navigate' + str(i), srv.Navigate), nums))
@@ -25,7 +38,7 @@ def set_rate_k(drone, k):
     param_set[drone]('MC_ROLLRATE_K', k)
     param_set[drone]('MC_PITCHRATE_K', k)
 
-def wait_arrival(drone=0, tolerance=1):
+def wait_arrival(drone=0, tolerance=2):
     while not rospy.is_shutdown():
         telem = get_telemetry[drone](frame_id='navigate_target')
         if telem.x ** 2 + telem.y ** 2 + telem.z ** 2 < tolerance**2:
@@ -45,10 +58,18 @@ with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
 navigate[0](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
 rospy.sleep(5)
 
+i = 0
 for crd in crd_list:
+    i+=1
     print(f"flying to {crd}")
-    navigate_global[0](lat=crd[0], lon=crd[1], z=crd[2], speed=10, frame_id='map')
+    navigate_global[0](lat=crd[0], lon=crd[1], z=crd[2], speed=SPEED, frame_id='map')
     wait_arrival()
-    #rospy.sleep(15)
+    if i == 7:
+        client.call_async('dropCargo', vehicle_name).join()
+        set_rate_k(0, 0.3)
+
+
+navigate_global[0](lat=crd_list[0][0], lon=crd_list[0][1], z=10, speed=SPEED, frame_id='map')
+wait_arrival()
 
 land[0]()
