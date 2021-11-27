@@ -9,16 +9,16 @@ drones = 3
 nums = range(1, drones + 1)
 
 
-get_telemetry = map(lambda i: rospy.ServiceProxy('get_telemetry' + str(i), srv.GetTelemetry), nums)
-navigate = map(lambda i: rospy.ServiceProxy('navigate' + str(i), srv.Navigate), nums)
-navigate_global = map(lambda i: rospy.ServiceProxy('navigate_global' + str(i), srv.NavigateGlobal), nums)
-set_position = map(lambda i: rospy.ServiceProxy('set_position' + str(i), srv.SetPosition), nums)
-set_velocity = map(lambda i: rospy.ServiceProxy('set_velocity' + str(i), srv.SetVelocity), nums)
-set_attitude = map(lambda i: rospy.ServiceProxy('set_attitude' + str(i), srv.SetAttitude), nums)
-set_rates = map(lambda i: rospy.ServiceProxy('set_rates' + str(i), srv.SetRates), nums)
-land = map(lambda i: rospy.ServiceProxy('land' + str(i), srv.Trigger), nums)
+get_telemetry = list(map(lambda i: rospy.ServiceProxy('get_telemetry' + str(i), srv.GetTelemetry), nums))
+navigate = list(map(lambda i: rospy.ServiceProxy('navigate' + str(i), srv.Navigate), nums))
+navigate_global = list(map(lambda i: rospy.ServiceProxy('navigate_global' + str(i), srv.NavigateGlobal), nums))
+set_position = list(map(lambda i: rospy.ServiceProxy('set_position' + str(i), srv.SetPosition), nums))
+set_velocity = list(map(lambda i: rospy.ServiceProxy('set_velocity' + str(i), srv.SetVelocity), nums))
+set_attitude = list(map(lambda i: rospy.ServiceProxy('set_attitude' + str(i), srv.SetAttitude), nums))
+set_rates = list(map(lambda i: rospy.ServiceProxy('set_rates' + str(i), srv.SetRates), nums))
+land = list(map(lambda i: rospy.ServiceProxy('land' + str(i), srv.Trigger), nums))
 
-param_set = map(lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet), nums)
+param_set = list(map(lambda i: rospy.ServiceProxy('mavros' + str(i) + '/param/set', ParamSet), nums))
 
 
 def set_rate_k(drone, k):
@@ -42,8 +42,14 @@ def get_points(file):
     return pts
 
 
+crd_list = []
 
-crd_list = get_points(open('~/drone-games/tasks/cargo/2/gps_spline.pts', "r"))
+with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
+    for line in file:
+        line = line.rstrip()
+        l = line.split()
+        crd_list.append((float(l[0]), float(l[1]), float(l[2])))
+
 
 navigate[1](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
 rospy.sleep(5)
