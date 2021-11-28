@@ -30,6 +30,17 @@ catkin_make simple_offboard
 catkin_make clover_generate_messages
 ```
 
+Install dependencies:
+
+```bash
+sudo apt install geographiclib-tools
+sudo geographiclib-get-geoids egm96-5
+pip3 install PyGeodesy
+pip3 install scipy
+```
+
+Upload parameters from `day2_1_cargo.params` to all drones.
+
 ## Running
 
 Source clover_ws setup.bash:

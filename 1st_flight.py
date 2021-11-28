@@ -45,7 +45,7 @@ def wait_arrival(drone=0, tolerance=2):
         telem = get_telemetry[drone](frame_id='navigate_target')
         if telem.x ** 2 + telem.y ** 2 + telem.z ** 2 < tolerance**2:
             break
-        print(f"velocity XYZ: {telem.vx} {telem.vy} {telem.vz}")
+        #print(f"velocity XYZ: {telem.vx} {telem.vy} {telem.vz}")
         rospy.sleep(0.2)
 
 crd_list = []
