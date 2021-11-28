@@ -67,8 +67,10 @@ first_point_coords = [
     enu_vector([home_position_2.lat, home_position_2.lon, home_position_2.alt], crd_list[0])
 ]
 
-navigate[0](x=0, y=0, z=5, speed=1, frame_id='body', auto_arm=True)
-rospy.sleep(5)
+navigate[0](x=0, y=0, z=20, speed=5, frame_id='body', auto_arm=True)
+navigate[1](x=0, y=0, z=20, speed=5, frame_id='body', auto_arm=True)
+navigate[2](x=0, y=0, z=20, speed=5, frame_id='body', auto_arm=True)
+rospy.sleep(10)
 
 i = 0
 for t, crd in [(a/100.0, (
@@ -80,9 +82,9 @@ for t, crd in [(a/100.0, (
 
     i+=1
     print(f"flying to {crd}")
-    navigate[0](x=crd[0][0]+first_point_coords[0][0], y=crd[0][1]+first_point_coords[0][1], z=crd[0][2]+first_point_coords[0][2], speed=SPEED, frame_id='map')
-    navigate[1](x=crd[1][0]+first_point_coords[1][0], y=crd[1][1]+first_point_coords[1][1], z=crd[1][2]+first_point_coords[1][2], speed=SPEED, frame_id='map')
-    navigate[2](x=crd[2][0]+first_point_coords[2][0], y=crd[2][1]+first_point_coords[2][1], z=crd[2][2]+first_point_coords[2][2], speed=SPEED, frame_id='map')
+    set_position[0](x=crd[0][0]+first_point_coords[0][0], y=crd[0][1]+first_point_coords[0][1], z=crd[0][2]+first_point_coords[0][2], auto_arm=True, frame_id='map')
+    set_position[1](x=crd[1][0]+first_point_coords[1][0], y=crd[1][1]+first_point_coords[1][1], z=crd[1][2]+first_point_coords[1][2], auto_arm=True, frame_id='map')
+    set_position[2](x=crd[2][0]+first_point_coords[2][0], y=crd[2][1]+first_point_coords[2][1], z=crd[2][2]+first_point_coords[2][2], auto_arm=True, frame_id='map')
     wait_arrival()
     # Тут надо будет сравнивать текущее t с t сброса груза
     # Найти t сброса груза можно найдя в gps_spline.pts точку с lat, lon
