@@ -55,6 +55,8 @@ Run services:
 roslaunch main.launch
 ```
 
+Wait until mavros and all global position are initialized.
+
 Run script:
 
 ```bash
