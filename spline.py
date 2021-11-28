@@ -21,13 +21,28 @@ def enu_vector(g1, g2):
     return [em, nm, u]
 
 
-with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
+with open('/home/user/drone-games/tasks/cargo/3/gps_spline.pts') as file:
     gps_coords = [[float(a) for a in line.rstrip().split()] for line in file]
 
-with open('/home/user/drone-games/tasks/cargo/2/spline_t.txt') as file:
+with open('/home/user/drone-games/tasks/cargo/3/spline_t.txt') as file:
     gps_coords_t = [float(line.rstrip()) for line in file if line.rstrip()]
 
 local_coords = [enu_vector(gps_coords[0], g2) for g2 in gps_coords]
+
+
+drop_t = []
+
+with open('/home/user/drone-games/tasks/cargo/3/gps_droppoint.pts') as file:
+    droppoints = [[float(a) for a in line.rstrip().split()] for line in file]
+    for droppoint in droppoints:
+       for i, coords in enumerate(gps_coords):
+           if coords[0] == droppoint[0] and coords[1] == droppoint[1]:
+           	drop_t.append(gps_coords_t[i])
+           	break
+
+
+print('drop_t', drop_t)
+
 
 splines_xyz = (interp1d(gps_coords_t, [xyz[0] for xyz in local_coords], kind='cubic'),
                interp1d(gps_coords_t, [xyz[1] for xyz in local_coords], kind='cubic'),
