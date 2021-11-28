@@ -160,8 +160,8 @@ for t, crd in [(a/resolution, (
        if t >= drop_t[drone] - 1/resolution and not cargo_dropped[drone]:
            print('fly to drop point')
            z = get_telemetry[drone]().z
-           #navigate_global[drone](lat=droppoints[drone][0], lon=droppoints[drone][1], z=z, speed=1)
-           #wait_arrival(drone, tolerance=1)
+           navigate_global[drone](lat=droppoints[drone][0], lon=droppoints[drone][1], z=z, speed=1)
+           wait_arrival(drone, tolerance=1)
            rospy.sleep(2)
            
            print('drop cargo %s' % (drone + 1))
