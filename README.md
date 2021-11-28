@@ -26,7 +26,7 @@ Build `simple_offboard` target:
 
 ```bash
 cd ~/clover_ws
-catkin_make simple_offboard
+catkin_make simple_offboard -DCATKIN_WHITELIST_PACKAGES=clover
 catkin_make clover_generate_messages
 ```
 
