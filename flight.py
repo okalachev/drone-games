@@ -87,7 +87,7 @@ rospy.sleep(1)
 
 crd_list = []
 
-with open('/home/user/drone-games/tasks/cargo/2/gps_spline.pts') as file:
+with open('/home/user/drone-games/tasks/cargo/3/gps_spline.pts') as file:
     for line in file:
         line = line.rstrip()
         l = line.split()
