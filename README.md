@@ -55,6 +55,12 @@ Run services:
 roslaunch main.launch
 ```
 
+Run script:
+
+```bash
+python3 flight.py
+```
+
 ## Misc
 
 Run simple_offboard:
