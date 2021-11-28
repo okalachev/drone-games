@@ -62,14 +62,13 @@ def wgs_to_amsl(lat, lon, alt):
 
 def set_rate_k(drone, k):
     param_set[drone](param_id='MC_ROLLRATE_K', value=ParamValue(real=k))
-    rospy.sleep(0.2)
     param_set[drone](param_id='MC_PITCHRATE_K', value=ParamValue(real=k))
 
 def wait_arrival(drone=0, tolerance=2, timeout=rospy.Duration(10)):
     start_time = rospy.get_rostime()
     while not rospy.is_shutdown():
         telem = get_telemetry[drone](frame_id='navigate_target')
-        if telem.x ** 2 + telem.y ** 2 + (telem.z ** 2 / 4) < tolerance**2:
+        if telem.x ** 2 + telem.y ** 2 + telem.z ** 2 < tolerance**2:
             break
         if rospy.get_rostime() - start_time > timeout:
             print('wait arrival timeout')
@@ -117,22 +116,22 @@ starts = [get_telemetry[drone]() for drone in range(drones)]
 first_point_coords = []
 for drone in range(drones):
     # amsl
-    #first_point_coords.append(
-    #   enu_vector([starts[drone].lat, starts[drone].lon, wgs_to_amsl(starts[drone].lat, starts[drone].lon, starts[drone].alt)],
-    #       crd_list[0])
-    #)
+    first_point_coords.append(
+       enu_vector([starts[drone].lat, starts[drone].lon, wgs_to_amsl(starts[drone].lat, starts[drone].lon, starts[drone].alt)],
+           crd_list[0])
+    )
 
     # to put cargo alt. on ground
     #first_point_coords.append(
     #   enu_vector([starts[drone].lat, starts[drone].lon, 120-18],
     #       crd_list[0])
     #)
-
+   
     # rel
-    first_point_coords.append(
-       enu_vector([starts[drone].lat, starts[drone].lon, 0],
-           crd_list[0])
-    )
+    #first_point_coords.append(
+    #   enu_vector([starts[drone].lat, starts[drone].lon, 0],
+    #       crd_list[0])
+    #)
     
 
 
@@ -164,7 +163,7 @@ for t, crd in [(a/resolution, (
     for drone in range(drones):
         set_position[drone](x=crd[drone][0]+first_point_coords[drone][0]+starts[drone].x, y=crd[drone][1]+first_point_coords[drone][1]+starts[drone].y, z=crd[drone][2]+first_point_coords[drone][2]+starts[drone].z, auto_arm=True, frame_id='map')
     
-    wait_arrival(tolerance=5)
+    wait_arrival(tolerance=10)
     
     for drone in range(drones):
        if t >= drop_t[drone] - 1/resolution and not cargo_dropped[drone]:

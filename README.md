@@ -39,9 +39,9 @@ pip3 install PyGeodesy
 pip3 install scipy
 ```
 
-Replace `px4_num.launch` in `~drone-games/multiple-sitl/mavros` with `px4_num.launch` in this repo.
+Replace `px4_num.launch` in `~drone-games/multiple-sitl/mavros` with `px4_num.launch` in this directory.
 
-Upload parameters from `day2_1_cargo.params` to all drones.
+Upload parameters from `day2_1_cargo.params` to all drones OR replace `~/drone-games/airsim/settings.json` with `settings.json` in this directory.
 
 ## Running
 
