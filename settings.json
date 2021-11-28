@@ -1,0 +1,46 @@
+{
+    "SettingsVersion": 1.2,
+    "SimMode": "Multirotor",
+    "LocalHostIp": "127.0.0.1",
+    "Vehicles": {
+        "PX4": {
+            "VehicleType": "PX4Multirotor",
+            "Sensors":{
+                "Barometer":{
+                    "SensorType": 1,
+                    "Enabled": true,
+                    "PressureFactorSigma": 0.0001825
+                },
+                "Gps": {
+                    "SensorType": 3,
+                    "Enabled" : true,
+                    "UpdateLatency": 0,
+                    "UpdateFrequency": 20
+                }
+            },
+            "Parameters": {
+                "NAV_RCL_ACT": 0,
+                "NAV_DLL_ACT": 0,
+                "COM_OBL_ACT": 1,
+                "HTE_HT_NOISE": 0.003599999938160181,
+                "MC_PITCHRATE_D": 0.008200000040233135,
+                "MC_PITCHRATE_K": 3.000000000000000000,
+                "MC_PITCHRATE_P": 0.400000005960464478,
+                "MC_PITCH_P": 6.500000000000000000,
+                "MC_ROLLRATE_D": 0.008000000379979610,
+                "MC_ROLLRATE_K": 3.000000000000000000,
+                "MC_ROLLRATE_P": 0.400000005960464478,
+                "MC_ROLL_P": 6.500000000000000000,
+                "MC_YAWRATE_K": 2.000000000000000000,
+                "MC_YAWRATE_P": 0.400000005960464478,
+                "MC_YAW_P": 1.000000000000000000,
+                "MPC_XY_P": 0.400000005960464478,
+                "MPC_XY_VEL_D_ACC": 0.200000002980232239,
+                "MPC_XY_VEL_P_ACC": 1.799999952316284180,
+                "MPC_Z_VEL_I_ACC": 2.000000000000000000,
+                "MPC_Z_VEL_P_ACC": 4.000000000000000000
+                
+            }
+        }
+    }
+}
