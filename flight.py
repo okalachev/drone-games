@@ -75,12 +75,30 @@ def wait_arrival(drone=0, tolerance=2, timeout=rospy.Duration(10)):
             break
         #print(f"velocity XYZ: {telem.vx} {telem.vy} {telem.vz}")
         rospy.sleep(0.05)
-        
+
+
+with open('/home/user/drone-games/tasks/cargo/3/mass.txt') as file:
+    vehicle_mass, load_mass = [float(i) for i in file.read().split()]
+
+
+def constrain(val, min_val, max_val):
+    return min(max_val, max(min_val, val))
+
+
+def _map(x, in_min, in_max, out_min, out_max):
+    return ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+
+
+k_with_load = constrain(_map(vehicle_mass + load_mass, 1.2, 0.8, 3.0, 0.3), 0.3, 3.0)
+k_without_load = constrain(_map(vehicle_mass, 1.2, 0.8, 3.0, 0.3), 0.3, 3.0)
+print('k with load', k_with_load)
+print('k without load', k_without_load)
+
 # set initial params
 for drone in range(drones):
-    set_rate_k(drone, 3.0)
+    set_rate_k(drone, k_with_load)
     rospy.sleep(0.5)
-    set_rate_k(drone, 3.0)
+    set_rate_k(drone, k_with_load)
 rospy.sleep(1)
 
 # todo: check nans
@@ -176,7 +194,7 @@ for t, crd in [(a/resolution, (
            print('drop cargo %s' % (drone + 1))
            cargo_dropped[drone] = True
            client.call_async('dropCargo', 'iris%s' % (drone + 1)).join()
-           set_rate_k(drone, 0.3)
+           set_rate_k(drone, k_without_load)
     
     # Тут надо будет сравнивать текущее t с t сброса груза
     # Найти t сброса груза можно найдя в gps_spline.pts точку с lat, lon
