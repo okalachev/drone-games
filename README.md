@@ -5,6 +5,8 @@ Task:
 * https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5.md
 * https://github.com/acsl-mipt/drone-games/blob/main/.resources/TASK_5_2.md
 
+<img src="screenshot.png" width=500>
+
 ## Installation
 
 Create catkin workspace for Clover packages:
