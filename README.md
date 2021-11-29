@@ -9,6 +9,8 @@ Video: https://youtu.be/6rFpPLcB3X4?t=24332.
 
 <img src="screenshot.png" width=500>
 
+Variant with dynamic PID coefficients computation is in the [`dynamic-pid`](https://github.com/okalachev/drone-games/tree/dynamic-pid) branch.
+
 ## Installation
 
 Create catkin workspace for Clover packages:
